@@ -1,0 +1,25 @@
+.medicine-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .medicine-table th, .medicine-table td {
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .medicine-table th {
+    background-color: #2d334a;
+    color: #ffffff;
+  }
+  
+  .medicine-table tr:nth-child(even) {
+    background-color: #3e455b;
+  }
+  
+  .medicine-table tr:hover {
+    background-color: #4a516e;
+  }
+  

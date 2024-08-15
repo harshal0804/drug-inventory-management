@@ -1,0 +1,25 @@
+.sales-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .sales-table th, .sales-table td {
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .sales-table th {
+    background-color: #2d334a;
+    color: #ffffff;
+  }
+  
+  .sales-table tr:nth-child(even) {
+    background-color: #3e455b;
+  }
+  
+  .sales-table tr:hover {
+    background-color: #4a516e;
+  }
+  
