@@ -15,6 +15,7 @@ const Sidebar = () => {
         <li><Link to="/expenses">Expenses</Link></li>
         <li><Link to="/reporting">Reporting</Link></li>
         <li><Link to="/staff">Staff</Link></li>
+        <li><Link to="/order">order</Link></li>
       </ul>
     </div>
   );
