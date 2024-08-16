@@ -3,12 +3,8 @@ import Sidebar from './Sidebar';
 import '../styles/MedicineCategory.css';
 
 const MedicineCategory = () => {
-  // State to manage form input
-  const [category, setCategory] = useState({
-    categoryName: ''
-  });
+  const [category, setCategory] = useState({ name: '' });
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCategory((prevCategory) => ({
@@ -17,7 +13,6 @@ const MedicineCategory = () => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,9 +31,7 @@ const MedicineCategory = () => {
 
       const data = await response.json();
       console.log('Added Category:', data);
-
-      // Optionally, reset form or provide feedback
-      setCategory({ categoryName: '' });
+      setCategory({ name: '' });
       alert('Category added successfully');
     } catch (error) {
       console.error('Error adding category:', error);
@@ -56,8 +49,8 @@ const MedicineCategory = () => {
             Category Name:
             <input
               type="text"
-              name="categoryName"
-              value={category.categoryName}
+              name="name"
+              value={category.name}
               onChange={handleChange}
             />
           </label>

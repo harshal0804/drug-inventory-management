@@ -3,23 +3,20 @@ import Sidebar from './Sidebar';
 import '../styles/Expenses.css';
 
 const Expenses = () => {
-  // State to manage form inputs
-  const [expenses, setExpenses] = useState({
+  const [expense, setExpense] = useState({
     expenseType: '',
     amount: '',
     date: ''
   });
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setExpenses((prevExpenses) => ({
-      ...prevExpenses,
+    setExpense((prevExpense) => ({
+      ...prevExpense,
       [name]: value
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,16 +26,22 @@ const Expenses = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(expenses)
+        body: JSON.stringify(expense)
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to add expense');
+      }
 
       const data = await response.json();
       console.log('Added Expense:', data);
 
-      // Optionally, reset form or provide feedback
-      setExpenses({ expenseType: '', amount: '', date: '' });
+      alert('Expense added successfully!');
+      setExpense({ expenseType: '', amount: '', date: '' });
     } catch (error) {
       console.error('Error adding expense:', error);
+      alert('Failed to add expense. Please try again. Error details: ' + error.message);
     }
   };
 
@@ -53,7 +56,7 @@ const Expenses = () => {
             <input
               type="text"
               name="expenseType"
-              value={expenses.expenseType}
+              value={expense.expenseType}
               onChange={handleChange}
             />
           </label>
@@ -62,7 +65,7 @@ const Expenses = () => {
             <input
               type="number"
               name="amount"
-              value={expenses.amount}
+              value={expense.amount}
               onChange={handleChange}
             />
           </label>
@@ -71,7 +74,7 @@ const Expenses = () => {
             <input
               type="date"
               name="date"
-              value={expenses.date}
+              value={expense.date}
               onChange={handleChange}
             />
           </label>

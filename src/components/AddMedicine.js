@@ -12,7 +12,7 @@ const AddMedicine = () => {
     const [effects, setEffects] = useState('');
     const [expireDate, setExpireDate] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const medicineData = {
@@ -28,20 +28,27 @@ const AddMedicine = () => {
             expireDate
         };
 
-        fetch('http://localhost:5000/api/medicines', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(medicineData)
-        })
-        .then(response => response.json())
-        .then(data => {
+        try {
+            const response = await fetch('http://localhost:5000/api/medicines', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(medicineData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to add medicine');
+            }
+
+            const data = await response.json();
             console.log('Medicine added:', data);
-        })
-        .catch(error => {
+            alert('Medicine added successfully!'); // Success alert
+        } catch (error) {
             console.error('Error:', error);
-        });
+            alert('Failed to add medicine. Please try again. Error details: ' + error.message); // Error alert
+        }
     };
 
     return (

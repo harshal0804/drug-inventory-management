@@ -2,35 +2,22 @@ const express = require('express');
 const Expense = require('../models/Expense');
 const router = express.Router();
 
-// Get all expenses
-router.get('/', async (req, res) => {
-    const expenses = await Expense.find();
-    res.json(expenses);
-});
-
 // Add a new expense
 router.post('/', async (req, res) => {
-    const newExpense = new Expense(req.body);
+  try {
+    const { expenseType, amount, date } = req.body;
+
+    if (!expenseType || !amount || !date) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    const newExpense = new Expense({ expenseType, amount, date });
     const savedExpense = await newExpense.save();
-    res.json(savedExpense);
-});
-
-// Get a single expense by ID
-router.get('/:id', async (req, res) => {
-    const expense = await Expense.findById(req.params.id);
-    res.json(expense);
-});
-
-// Update an expense by ID
-router.put('/:id', async (req, res) => {
-    const updatedExpense = await Expense.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(updatedExpense);
-});
-
-// Delete an expense by ID
-router.delete('/:id', async (req, res) => {
-    await Expense.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Expense deleted' });
+    res.status(201).json(savedExpense);
+  } catch (error) {
+    console.error('Error adding expense:', error);
+    res.status(500).json({ message: 'Failed to add expense' });
+  }
 });
 
 module.exports = router;

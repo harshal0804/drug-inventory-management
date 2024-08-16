@@ -32,13 +32,24 @@ const Staff = () => {
         body: JSON.stringify(staff)
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to add staff');
+      }
+
       const data = await response.json();
       console.log('Added Staff:', data);
 
-      // Optionally, reset form or provide feedback
+      // Show success alert
+      alert('Staff added successfully!');
+
+      // Optionally, reset form
       setStaff({ name: '', position: '', contact: '' });
     } catch (error) {
       console.error('Error adding staff:', error);
+
+      // Show error alert
+      alert('Failed to add staff. Please try again. Error details: ' + error.message);
     }
   };
 
@@ -55,6 +66,7 @@ const Staff = () => {
               name="name"
               value={staff.name}
               onChange={handleChange}
+              required
             />
           </label>
           <label>
@@ -64,6 +76,7 @@ const Staff = () => {
               name="position"
               value={staff.position}
               onChange={handleChange}
+              required
             />
           </label>
           <label>
@@ -73,6 +86,7 @@ const Staff = () => {
               name="contact"
               value={staff.contact}
               onChange={handleChange}
+              required
             />
           </label>
           <button type="submit">Add Staff</button>
