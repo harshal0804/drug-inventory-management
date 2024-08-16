@@ -8,12 +8,14 @@ import AllSales from './components/AllSales';
 import Expenses from './components/Expenses';
 import Reporting from './components/Reporting';
 import Staff from './components/Staff';
+import Chatbot from './components/chatbot'; // Import Chatbot component
 import '../src/App.css';
 
 function App() {
   return (
     <Router>
       <div className="app-container">
+        {/* Main content routes */}
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/medicine-list" element={<MedicineList />} />
@@ -24,6 +26,9 @@ function App() {
           <Route path="/reporting" element={<Reporting />} />
           <Route path="/staff" element={<Staff />} />
         </Routes>
+
+        {/* Chatbot component */}
+        <Chatbot />
       </div>
     </Router>
   );
